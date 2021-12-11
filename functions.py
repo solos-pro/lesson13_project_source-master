@@ -13,7 +13,7 @@ def get_tags(data):
 
         for word in words:
             if word.startswith('#'):
-                print(word[:])
+                # print(word[:])
                 result.add(word[1:])
     return result
 
@@ -21,6 +21,7 @@ def get_posts_by_tag(data, tag):
     result = []
     tag = str(tag)
     for record in data:
-        if f'{tag}' in record['content']:
+        if f'#{tag}' in record['content']:
             result.append(record)
+    # print(result)
     return result
