@@ -19,7 +19,8 @@ def get_tags(data):
 
 def get_posts_by_tag(data, tag):
     result = []
+    tag = str(tag)
     for record in data:
-        if tag in record['content']:
+        if f'{tag}' in record['content']:
             result.append(record)
     return result
