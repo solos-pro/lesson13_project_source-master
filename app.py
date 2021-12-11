@@ -14,7 +14,7 @@ def page_index():
 
 @app.route("/tag")
 def page_tag():
-    pass
+    return render_template("/tag")
 
 
 @app.route("/post", methods=["GET", "POST"])
@@ -27,5 +27,5 @@ def static_dir(path):
     return send_from_directory("uploads", path)
 
 
-app.run()
+app.run(debug=True)
 
