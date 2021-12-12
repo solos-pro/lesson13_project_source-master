@@ -25,3 +25,10 @@ def get_posts_by_tag(data, tag):
             result.append(record)
     # print(result)
     return result
+
+def add_post(filename, post):
+    data = read_json(filename)
+
+    data.append(post)
+    with open('posts.json', 'w', encoding='utf-8') as file:
+        json.dump(data, file, ensure_ascii=False, indent=4, sort_keys=True)
