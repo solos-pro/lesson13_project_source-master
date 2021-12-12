@@ -1,9 +1,10 @@
-from flask import Flask, request, render_template, send_from_directory, abort
+from flask import Flask, request, render_template, send_from_directory, abort, url_for
+import os
 from functions import *
 
 POST_PATH = "posts.json"
 UPLOAD_FOLDER = "uploads/images"
-
+BASEDIR = os.path.abspath(os.path.dirname(__file__))
 app = Flask(__name__)
 
 
@@ -35,9 +36,10 @@ def page_post_create():
     if not content or not picture:
         abort(400)
 
-    path = f'{UPLOAD_FOLDER}/{picture.filename}'
+    # path = f'{UPLOAD_FOLDER}/{picture.filename}'
+    path = os.path.join(BASEDIR, UPLOAD_FOLDER,  f'{picture.filename}')
     post = {
-        "pic": f'/{path}',
+        "pic": url_for('static_dir', path=picture.filename),
         "content": content
     }
     picture.save(path)
@@ -48,7 +50,7 @@ def page_post_create():
 
 @app.route("/uploads/<path:path>")
 def static_dir(path):
-    return send_from_directory("uploads", path)
+    return send_from_directory(UPLOAD_FOLDER, path)
 
 
 app.run(debug=True)
