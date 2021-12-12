@@ -20,12 +20,30 @@ def page_tag():
         abort(400)
     data = (read_json(POST_PATH))
     posts = get_posts_by_tag(data, tag)
-    return render_template("/post_by_tag.html", tag=tag, posts=posts)
+    return render_template("post_by_tag.html", tag=tag, posts=posts)
 
 
 @app.route("/post", methods=["GET", "POST"])
 def page_post_create():
-    pass
+    if request.method == "GET":
+        return render_template("post_form.html")
+    # print("POST")
+
+    content = request.form.get("content")
+    picture = request.files.get('picture')
+
+    if not content or not picture:
+        abort(400)
+
+    path = f'{UPLOAD_FOLDER}/{picture.filename}'
+    post = {
+        "pic": f'/{path}',
+        "content": content
+    }
+    picture.save(path)
+    add_post(POST_PATH, post)
+
+    return render_template('post_uploaded.html', post=post)
 
 
 @app.route("/uploads/<path:path>")
