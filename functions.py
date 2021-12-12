@@ -14,7 +14,7 @@ def get_tags(data):
         for word in words:
             if word.startswith('#'):
                 # print(word[:])
-                result.add(word[1:])
+                result.add(word[1:].rstrip("!"))
     return result
 
 def get_posts_by_tag(data, tag):
